@@ -11,6 +11,7 @@ const tripSchema = new mongoose.Schema({
   company: { type: String, required: true },
   price: { type: Number, required: true },
   facilities: [String], 
+  dates: [String] ,
 }, { timestamps: true });
 
 const Trip = mongoose.model("Trip", tripSchema);
