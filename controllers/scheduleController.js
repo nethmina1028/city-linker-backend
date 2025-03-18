@@ -1,6 +1,6 @@
 const BusSchedule = require("../models/busScheduleModel");
 
-// Get all bus schedules with trip details
+
 const getSchedules = async (req, res) => {
   try {
     const schedules = await BusSchedule.find().populate("tripId");
