@@ -7,6 +7,7 @@ const tripSchema = new mongoose.Schema({
   number: { type: String, required: true },
   routeNumber: { type: String, required: true },
   seats: { type: Number, required: true },
+  seatsRow: { type: Number, required: true },
   duration: { type: String, required: true },
   company: { type: String, required: true },
   price: { type: Number, required: true },

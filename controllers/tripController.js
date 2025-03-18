@@ -3,17 +3,17 @@ const BusSchedule = require("../models/busScheduleModel");
 
 const addTrip = async (req, res) => {
   try {
-    const { from, to, time, number, routeNumber, seats, duration, company, price, facilities,dates} = req.body;
+    const { from, to, time, number, routeNumber, seats, seatsRow, duration, company, price, facilities,dates} = req.body;
 
-    const trip = new Trip({ from, to, time, number, routeNumber, seats, duration, company, price, facilities,dates});
+    const trip = new Trip({ from, to, time, number, routeNumber, seats, seatsRow, duration, company, price, facilities,dates});
     await trip.save();
   
-       // Create bus schedules for each date
-       const schedules = dates.map(date => ({
-        tripId: trip._id,
-        date,
-        seatsAvailable: seats
-      }));
+      // Create bus schedules for each date if dates are provided
+      const schedules = dates?.map(date => ({
+       tripId: trip._id,
+       date,
+       seatsAvailable: seats
+          })) || [];
 
       await BusSchedule.insertMany(schedules);
 
@@ -72,6 +72,7 @@ const updateTripDates = async (req, res) => {
       tripId: id,
       date,
       seatsAvailable: trip.seats
+      
     }));
 
     await BusSchedule.insertMany(schedules); // Insert updated schedules
