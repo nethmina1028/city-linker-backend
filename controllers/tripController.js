@@ -48,26 +48,26 @@ const getTripById = async (req, res) => {
 
 
 
-// Update Trip Dates & Sync Schedules
+
 const updateTripDates = async (req, res) => {
   try {
     const { id } = req.params;
     const { dates } = req.body;
 
-    // Find existing trip
+  
     const trip = await Trip.findById(id);
     if (!trip) {
       return res.status(404).json({ message: "Trip not found" });
     }
 
-    // Remove old schedules
+   
     await BusSchedule.deleteMany({ tripId: id });
 
-    // Update trip dates
+    
     trip.dates = dates;
     await trip.save();
 
-    // Recreate bus schedules
+   
     const schedules = dates.map(date => ({
       tripId: id,
       date,
@@ -75,7 +75,7 @@ const updateTripDates = async (req, res) => {
       
     }));
 
-    await BusSchedule.insertMany(schedules); // Insert updated schedules
+    await BusSchedule.insertMany(schedules); 
 
     res.status(200).json({ message: "Dates updated successfully!", trip });
   } catch (error) {
