@@ -5,10 +5,10 @@ const trackingSessionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Path",
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  // userId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
   startTime: {
     type: Date,
     required: true,

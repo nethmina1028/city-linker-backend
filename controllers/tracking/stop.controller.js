@@ -37,4 +37,9 @@ const deleteTrackingStop = async (req, res) => {
   }
 }
 
-module.exports = { getTrackingStops };
+module.exports = {
+  getTrackingStops,
+  createTrackingStop,
+  updateTrackingStop,
+  deleteTrackingStop
+};

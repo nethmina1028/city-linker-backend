@@ -1,7 +1,12 @@
 const express = require("express");
 
-// const { reserveSeats } = require("../controllers/reserveSeats");
+const { getTrackingPaths, createTrackingPath, updateTrackingPath, deleteTrackingPath } = require("../../controllers/tracking/path.controller");
 
-// const router = express.Router();
-// router.post("/", reserveSeats);
-// module.exports = router;
+const router = express.Router();
+
+router.get("/", getTrackingPaths);
+router.post("/", createTrackingPath);
+router.put("/", updateTrackingPath);
+router.delete("/:id", deleteTrackingPath);
+
+module.exports = router;
