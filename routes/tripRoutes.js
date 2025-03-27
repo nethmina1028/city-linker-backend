@@ -1,11 +1,11 @@
 const express = require("express");
-const { addTrip, getTrips, getTripById,addTripDates } = require("../controllers/tripController");
+const { addTrip, getTrips, getTripById,updateTripDates } = require("../controllers/tripController");
 
 const router = express.Router();
 
 router.post("/", addTrip);
 router.get("/", getTrips);
 router.get("/:id", getTripById);
-router.post("/:id/add-dates", addTripDates); 
+router.put("/:id/update-dates", updateTripDates); 
 
 module.exports = router;
