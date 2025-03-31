@@ -5,12 +5,11 @@ const connectDB = require("./config/db");
 const tripRoutes = require("./routes/tripRoutes");
 const scheduleRoutes = require("./routes/sheduleRoutes");
 const reserveSeats = require("./routes/reserveSeats");
-const searchRoutes = require("./routes/searchRoutes");
+const searchRoutes = require("./routes/searchRoutes");;
 const { errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
 connectDB();
-
 const app = express();
 
 
@@ -23,10 +22,14 @@ app.use(
 
 app.use(express.json());
 
+
 app.use("/api/trips", tripRoutes);
 app.use("/api/shedules", scheduleRoutes);
 app.use("/api/reserve",reserveSeats );
 app.use("/api/search", searchRoutes);
+
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
