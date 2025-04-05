@@ -7,7 +7,8 @@ const scheduleRoutes = require("./routes/sheduleRoutes");
 const reserveSeats = require("./routes/reserveSeats");
 const searchRoutes = require("./routes/searchRoutes");;
 const { errorHandler } = require("./middleware/errorMiddleware");
-
+const { payment } = require("paypal-rest-sdk");
+const paymentRoutes = require("./routes/payment");
 dotenv.config();
 connectDB();
 const app = express();
@@ -27,6 +28,8 @@ app.use("/api/trips", tripRoutes);
 app.use("/api/shedules", scheduleRoutes);
 app.use("/api/reserve",reserveSeats );
 app.use("/api/search", searchRoutes);
+
+app.use("/api/payment", paymentRoutes);
 
 
 
