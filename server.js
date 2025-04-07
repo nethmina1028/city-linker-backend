@@ -8,6 +8,7 @@ const reserveSeats = require("./routes/reserveSeats");
 const searchRoutes = require("./routes/searchRoutes");
 const paymentRoutes = require("./routes/payment");
 const ticketRoutes = require("./routes/ticketRoutes");
+const recordRoutes = require("./routes/recordRoutes");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const { payment } = require("paypal-rest-sdk");
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/reserve",reserveSeats );
 app.use("/api/search", searchRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/tickets", ticketRoutes);
+app.use("/api/records", recordRoutes);
 
 
 
