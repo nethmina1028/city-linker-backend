@@ -23,6 +23,16 @@ const addTrip = async (req, res) => {
   }
 };
 
+const countDocuments = async (req, res) => {
+  try {
+    const totalTrips = await Trip.countDocuments();
+    const totalSchedules = await BusSchedule.countDocuments();
+    res.status(200).json({ totalTrips, totalSchedules });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to count documents", error: error.message });
+  }
+};
+
 
 const getTrips = async (req, res) => {
   try {
@@ -83,4 +93,4 @@ const addTripDates = async (req, res) => {
   }
 };
 
-module.exports = { addTrip, getTrips, getTripById, addTripDates };
+module.exports = { addTrip, getTrips, getTripById, addTripDates,countDocuments };
