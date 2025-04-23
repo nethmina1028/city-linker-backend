@@ -10,4 +10,19 @@ const getSchedules = async (req, res) => {
   }
 };
 
-module.exports = { getSchedules };
+
+const getSchedulesByTripId = async (req, res) => {
+  try {
+    const { id: tripId } = req.params; 
+    const schedules = await BusSchedule.find({ tripId });
+    res.status(200).json(schedules);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch schedules by trip ID", error: error.message });
+  }
+};
+
+
+
+
+
+module.exports = { getSchedules,getSchedulesByTripId };
