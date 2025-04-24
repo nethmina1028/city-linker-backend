@@ -3,12 +3,37 @@ const BusSchedule = require("../models/busScheduleModel");
 
 const addTrip = async (req, res) => {
   try {
-    const { from, to, time, number, routeNumber, seats, seatsRow, duration, company, price, facilities,dates} = req.body;
+    const {
+        from,
+        to,
+        time,
+        number,
+        routeNumber,
+        seats,
+        seatsRow,
+        duration,
+        company,
+        price,
+        facilities,
+        dates
+      } = req.body;
 
-    const trip = new Trip({ from, to, time, number, routeNumber, seats, seatsRow, duration, company, price, facilities,dates});
+    const trip = new Trip({
+       from,
+       to,
+       time, 
+       number,
+       routeNumber,
+       seats,
+       seatsRow, 
+       duration,
+       company,
+       price, 
+       facilities,
+       dates});
     await trip.save();
   
-      // Create bus schedules for each date if dates are provided
+     
       const schedules = dates?.map(date => ({
        tripId: trip._id,
        date,
@@ -42,6 +67,27 @@ const getTrips = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch trips", error: error.message });
   }
 };
+
+
+const deleteTrip = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    
+    const trip = await Trip.findByIdAndDelete(id);
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    await BusSchedule.deleteMany({ tripId: id });
+
+    res.status(200).json({ message: "Trip deleted successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete trip", error: error.message });
+  }
+};
+
+
 
 
 const getTripById = async (req, res) => {
@@ -93,4 +139,4 @@ const addTripDates = async (req, res) => {
   }
 };
 
-module.exports = { addTrip, getTrips, getTripById, addTripDates,countDocuments };
+module.exports = { addTrip, getTrips, getTripById, addTripDates,countDocuments,deleteTrip };
