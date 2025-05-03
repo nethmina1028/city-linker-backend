@@ -3,9 +3,7 @@ const { getSchedules,getSchedulesByTripId } = require("../controllers/scheduleCo
 
 const router = express.Router();
 
-
 router.get("/", getSchedules);
 router.get("/:id", getSchedulesByTripId); 
-
 
 module.exports = router;

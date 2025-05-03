@@ -105,7 +105,7 @@ const getTripById = async (req, res) => {
 
 
 
-const addTripDates = async (req, res) => {
+const updateTripDates = async (req, res) => {
   try {
     const { id } = req.params;
     const { dates } = req.body;
@@ -140,3 +140,4 @@ const addTripDates = async (req, res) => {
 };
 
 module.exports = { addTrip, getTrips, getTripById, addTripDates,countDocuments,deleteTrip };
+

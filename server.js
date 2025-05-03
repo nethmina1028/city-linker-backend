@@ -1,16 +1,24 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+
 const connectDB = require("./config/db");
+
 const tripRoutes = require("./routes/tripRoutes");
 const scheduleRoutes = require("./routes/sheduleRoutes");
 const reserveSeats = require("./routes/reserveSeats");
+
 const searchRoutes = require("./routes/searchRoutes");
 const paymentRoutes = require("./routes/payment");
 const ticketRoutes = require("./routes/ticketRoutes");
 const recordRoutes = require("./routes/recordRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const seatsRoutes = require("./routes/seatsRoutes");
+
+const trackingRoutes = require("./routes/tracking.route");
+
+const { errorHandler } = require("./middleware/errorMiddleware");
+
 
 const { generateDailyBusBookingReport } = require("./utils/reportGenaration");
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -20,16 +28,14 @@ connectDB();
 const app = express();
 
 app.use(
-  cors({
-      origin: '*',
-      
-  })    
+  cors({ origin: '*' })
 );
 
 app.use(express.json());
 
 app.use("/api/trips", tripRoutes);
 app.use("/api/shedules", scheduleRoutes);
+
 app.use("/api/reserve",reserveSeats );
 app.use("/api/search", searchRoutes);
 app.use("/api/payment", paymentRoutes);
@@ -38,6 +44,8 @@ app.use("/api/records", recordRoutes);
 app.use("/api/banner",bannerRoutes );
 app.use("/api/seats",seatsRoutes);
 
+
+app.use("/api/tracking", trackingRoutes);
 
 
 const PORT = process.env.PORT || 5000;
