@@ -10,12 +10,14 @@ const paymentRoutes = require("./routes/payment");
 const ticketRoutes = require("./routes/ticketRoutes");
 const recordRoutes = require("./routes/recordRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
+const seatsRoutes = require("./routes/seatsRoutes");
+
+const { generateDailyBusBookingReport } = require("./utils/reportGenaration");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const { payment } = require("paypal-rest-sdk");
 dotenv.config();
 connectDB();
 const app = express();
-
 
 app.use(
   cors({
@@ -34,8 +36,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/records", recordRoutes);
 app.use("/api/banner",bannerRoutes );
-
-
+app.use("/api/seats",seatsRoutes);
 
 
 
