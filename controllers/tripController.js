@@ -4,6 +4,7 @@ const BusSchedule = require("../models/busScheduleModel");
 const addTrip = async (req, res) => {
   try {
     const {
+        userId,
         from,
         to,
         time,
@@ -19,6 +20,7 @@ const addTrip = async (req, res) => {
       } = req.body;
 
     const trip = new Trip({
+        userId,
        from,
        to,
        time, 
@@ -56,14 +58,14 @@ const countDocuments = async (req, res) => {
       return res.status(400).json({ message: "userId is required" });
     }
 
-    // Count trips by userId
+   
     const totalTrips = await Trip.countDocuments({ userId });
 
-    // Count bus schedules where the linked Trip has the userId
+    
     const result = await BusSchedule.aggregate([
       {
         $lookup: {
-          from: "trips", // collection name in MongoDB (lowercase + pluralized by default)
+          from: "trips", 
           localField: "tripId",
           foreignField: "_id",
           as: "tripInfo"
