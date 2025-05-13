@@ -50,11 +50,28 @@ const addTrip = async (req, res) => {
 
 const countDocuments = async (req, res) => {
   try {
-    const totalTrips = await Trip.countDocuments();
-    const totalSchedules = await BusSchedule.countDocuments();
-    res.status(200).json({ totalTrips, totalSchedules });
+    // Get userId from request (could be params, query, or body)
+    const userId = req.params.userId ;
+    
+    if (!userId) {
+      return res.status(400).json({ message: "userId is required" });
+    }
+
+    // Count only documents that belong to this userId
+    const totalTrips = await Trip.countDocuments({ userId });
+    const totalSchedules = await BusSchedule.countDocuments({ userId });
+    
+    res.status(200).json({ 
+      success: true,
+      totalTrips, 
+      totalSchedules 
+    });
   } catch (error) {
-    res.status(500).json({ message: "Failed to count documents", error: error.message });
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to count documents", 
+      error: error.message 
+    });
   }
 };
 

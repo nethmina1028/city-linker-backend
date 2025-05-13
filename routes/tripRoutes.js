@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/", addTrip);
 router.get("/", getTrips);
-router.get("/count", countDocuments); 
+router.get("/count/:userId", countDocuments); 
 router.get("/:id", getTripById);
 router.delete("/:id", deleteTrip);
 router.post("/:id/add-dates", addTripDates); 
