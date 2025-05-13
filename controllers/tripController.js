@@ -50,27 +50,51 @@ const addTrip = async (req, res) => {
 
 const countDocuments = async (req, res) => {
   try {
-    // Get userId from request (could be params, query, or body)
-    const userId = req.params.userId ;
-    
+    const userId = req.params.userId;
+
     if (!userId) {
       return res.status(400).json({ message: "userId is required" });
     }
 
-    // Count only documents that belong to this userId
+    // Count trips by userId
     const totalTrips = await Trip.countDocuments({ userId });
-    const totalSchedules = await BusSchedule.countDocuments({ userId });
-    
-    res.status(200).json({ 
+
+    // Count bus schedules where the linked Trip has the userId
+    const result = await BusSchedule.aggregate([
+      {
+        $lookup: {
+          from: "trips", // collection name in MongoDB (lowercase + pluralized by default)
+          localField: "tripId",
+          foreignField: "_id",
+          as: "tripInfo"
+        }
+      },
+      {
+        $unwind: "$tripInfo"
+      },
+      {
+        $match: {
+          "tripInfo.userId": userId
+        }
+      },
+      {
+        $count: "totalSchedules"
+      }
+    ]);
+
+    const totalSchedules = result.length > 0 ? result[0].totalSchedules : 0;
+
+    res.status(200).json({
       success: true,
-      totalTrips, 
-      totalSchedules 
+      totalTrips,
+      totalSchedules
     });
+
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: "Failed to count documents", 
-      error: error.message 
+      message: "Failed to count documents",
+      error: error.message
     });
   }
 };
